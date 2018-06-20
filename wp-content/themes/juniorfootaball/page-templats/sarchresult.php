@@ -23,18 +23,29 @@ $pageID = get_the_ID();
 ?>
 <?php
 $search = realpath(__DIR__ . '/..').'\template-parts\serach-widget.php';
+$slider = realpath(__DIR__ . '/..').'\template-parts\common-slider.php';
+
+
+
+if (file_exists($slider)) {
+    // echo "in if";exit;
+    require( $slider );
+}
+
 
 // echo $search;exit;
 if (file_exists($search)) {
-    //  echo "in if";exit;
+      echo "in if";exit;
     require( $search );
 }
+
+
 ?>
 <div class="middlepart_wrapper_innerpages">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h4>AGENDA</h4>
+                <h4>Players</h4>
             </div>
         </div>
         <?php 
@@ -117,10 +128,10 @@ if (file_exists($search)) {
                     </div>
                     <div class="bottom_part">
                     <?php $imgUrl = get_user_meta($user->data->ID,'profile_picture'); 
-                    // echo '<pre>';print_r($imgUrl);exit; 
+                    // echo '<pre>';print_r(wp_get_attachment_url($imgUrl[0]));exit; 
                     ?>
                     
-                        <!-- <img src="<?php //echo get_user_meta($user->data->ID,'profile_picture'); ?>" /> -->
+                        <img src="<?php echo wp_get_attachment_url($imgUrl[0]); ?>" />
                     </div>
                 </div>
             </div>

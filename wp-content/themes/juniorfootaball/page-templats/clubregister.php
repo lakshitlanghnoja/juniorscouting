@@ -18,6 +18,20 @@
 
 get_header(); 
 $pageID = get_the_ID();
+
+$search = realpath(__DIR__ . '/..').'\template-parts\serach-widget.php';
+$slider = realpath(__DIR__ . '/..').'\template-parts\common-slider.php';
+
+
+if (file_exists($slider)) {
+    // echo "in if";exit;
+    require( $slider );
+}
+if (file_exists($search)) {
+     //echo "in if";exit;
+    require( $search );
+}   
+
 ?>
 
 <div class="inner_wrapper">
@@ -116,19 +130,14 @@ $pageID = get_the_ID();
 
 
     </div>
+<?php
+$commonSponsor = realpath(__DIR__ . '/..').'/template-parts/common-sponsor.php';
 
-<div class="sponsers_wrapper">
-    <div class="container">
-        <h4>SPONSORS</h4>
-        <ul>
-            <li><a href=""> <img src="<?php echo get_template_directory_uri(); ?>/images/knvb.png"></a></li>
-            <li><a href=""> <img src="<?php echo get_template_directory_uri(); ?>/images/abn-amro.png"></a></li>
-            <li><a href=""> <img src="<?php echo get_template_directory_uri(); ?>/images/ad.png"></a></li>
-            <li><a href=""> <img src="<?php echo get_template_directory_uri(); ?>/images/mini.png"></a></li>
-            <li><a href=""> <img src="<?php echo get_template_directory_uri(); ?>/images/tmobile.png"></a></li>
-        </ul>
-    </div>
-</div>
+if (file_exists($commonSponsor)) {
+    // echo "in if";exit;
+    require( $commonSponsor );
+}
+?>
 <script>
 $("#clubform").validate({
         ignore: ".ignore",

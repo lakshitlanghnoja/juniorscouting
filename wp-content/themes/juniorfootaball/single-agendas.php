@@ -15,43 +15,22 @@ $postId = get_the_ID();
 $content_post = get_post($postId);
 // echo '<pre>';print_r($content_post);exit;
 $content = $content_post->post_content;
+$search = realpath(__DIR__ ).'\template-parts\search-widget.php';
+$slider = realpath(__DIR__ ).'\template-parts\common-slider.php';
+
+if (file_exists($slider)) {
+    // echo "in if";exit;
+    require( $slider );
+}
+
+//echo $search;exit;
+if (file_exists($search)) {
+     echo "in if";exit;
+    require( $search );
+}
+
 ?>
-<div class="filter_wrapper ">
-    <div class="container">
-        <h4>ZOEKEN</h4>
-        <form>
-            <div class="form-group form-inline">
-                <label for="naam">NAAM</label>
-                <input type="text" class="form-control name_field" id="naam">
-                <label for="LEEFTIJD">LEEFTIJD</label>
-                <select class="form-control" id="LEEFTIJD">
-                    <option> 6-8 jaar</option>
-                    <option> 8-10 jaar</option>
-                    <option> 10-14 jaar</option>
-                </select>
-                <label for="AGENDA">AGENDA</label>
-                <select class="form-control" id="AGENDA">
-                    <option> January</option>
-                    <option> Ferbruary</option>
-                    <option> March</option>
-                    <option> April</option>
-                    <option> May</option>
-                    <option> June</option>
-                    <option> July</option>
-                    <option> August</option>
-                    <option> September</option>
-                    <option> October</option>
-                    <option> November</option>
-                    <option> December</option>
-                </select>
-                <div class=" form-control btn btn-danger login_btn">ZOEKEN</div>
-            </div>
 
-
-        </form>
-
-    </div>
-</div>
 
 <div class="middlepart_wrapper_innerpages">
     <div class="container">

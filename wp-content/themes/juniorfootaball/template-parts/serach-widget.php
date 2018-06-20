@@ -79,27 +79,29 @@ if ( $the_query->have_posts() ) {
                 <div class="field_wrapper">
                     <label for="POSITIE_VELD">POSITIE VELD</label>
                     <select class="form-control position" id="POSITIE_VELD" name="position">
-                    <option value="Goalkeeper">Goalkeeper</option>
-                    <option value="Centreback">Centre back</option>
-                    <option value="Sweeper">Sweeper</option>
-                    <option value="Fullback">Full back</option>
-                    <option value="Wingback">Wing back</option>
-                    <option value="Centralmidfielders">Central midfielders</option>
-                    <option value="Defensivemidfielders">Defensive midfielders</option>
-                    <option value="Attackingmidfielders">Attacking midfielders</option>
-                    <option value="Widemidfielders">Wide midfielders</option>
-                    <option value="Centerforwards">Center forwards</option>
-                    <option value="Secondstrikers">Second strikers</option>
-                    <option value="Wingerattackers">Winger attackers</option>
+                    <option value="Keeper">Keeper</option>
+                    <option value="voorstopper">voorstopper</option>
+                    <option value="verdediger">verdediger</option>
+                    <option value="linksachter">linksachter</option>
+                    <option value="rechtsachter">rechtsachter</option>
+                    <option value="vleugelverdediger">vleugelverdediger</option>
+                    <option value="buitenspel links">buitenspel links</option>
+                    <option value="buitenspel rechts">buitenspel rechts</option>
+                    <option value="verdediger middenveld">verdediger middenveld</option>
+                    <option value="linker middenveld">linker middenveld</option>
+                    <option value="rechter middenveld">rechter middenveld</option>
+                    <option value="centrale middenveld">centrale middenveld</option>
+                    <option value="aanvaller middenveld">aanvaller middenveld</option>
+                    <option value="centrale aanvaller">centrale aanvaller</option>
                         
                     </select>
                 </div>
                 <div class="field_wrapper">
                     <label for="KWALIFICATIE">KWALIFICATIE</label>
-                    <select class="form-control kwalificatie" id="KWALIFICATIE" name="qualification">
-                        <option>F (6-8 jr.)</option>
-                        <option>F (6-8 jr.)</option>
-                        <option>F (6-8 jr.)</option>
+                    <select class="form-control kwalificatie qualification" id="KWALIFICATIE" name="qualification">
+                        <option value="Under Graduate">Under Graduate</option>
+                        <option value="Graduate">Graduate</option>
+                        <option value="Post Graduate">Post Graduate</option>
                     </select>
                 </div>
             </div>
@@ -167,6 +169,7 @@ $(".search-btn").click(function(){
     var agenda = '';
     var position = '';
     var star = '';
+    var qualification = '';
     if($(".playername").val() != undefined)
         playername = $(".playername").val();
     if($(".age").val() != undefined)
@@ -177,9 +180,11 @@ $(".search-btn").click(function(){
     star = $(".star").val();
     if($(".position").val() != undefined)
     position = $(".position").val();
+    if($(".qualification").val() != undefined)
+    qualification = $(".qualification").val();
     console.log(playername);
     // return false;
-    var param = "?playername="+playername+"&age="+age+"&agenda="+agenda+"&star="+star+"&position="+position;
+    var param = "?playername="+playername+"&age="+age+"&agenda="+agenda+"&star="+star+"&position="+position+"&qualification="+qualification;
     var url = "http://localhost/juniorfootball/search-result"+param;
     // console.log(url);
     // return false;

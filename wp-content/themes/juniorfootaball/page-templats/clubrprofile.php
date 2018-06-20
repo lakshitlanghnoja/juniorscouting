@@ -17,6 +17,19 @@
  */
 
 get_header(); 
+$search = realpath(__DIR__ . '/..').'\template-parts\serach-widget.php';
+$slider = realpath(__DIR__ . '/..').'\template-parts\common-slider.php';
+
+
+if (file_exists($slider)) {
+    // echo "in if";exit;
+    require( $slider );
+}
+if (file_exists($search)) {
+     //echo "in if";exit;
+    require( $search );
+}
+
 $clubarray = array();
 $args = array('role'=> 'club','orderby'=>'display_name','order'=>ASC);
 $clubs = get_users( $args ); 
@@ -40,15 +53,7 @@ if(is_user_logged_in()){
     
 
 ?>
-<?php
-$search = realpath(__DIR__ . '/..').'\template-parts\search-widget.php';
 
-
-if (file_exists($search)) {
-    // echo "in if";exit;
-    require( $search );
-}
-?>
 
 </div>
 
@@ -126,100 +131,6 @@ if (file_exists($search)) {
 
 
 <?php }else{ ?>
-    <div class="filter_wrapper inner_filter">
-
-<div class="container">
-
-    <h4>ZOEKEN</h4>
-    <form>
-        <div class="form-group form-inline">
-            <div class="row">
-                <div class="col-md-12 col-xs-12">
-                    <div class="field_wrapper">
-                        <label for="naam">NAAM</label>
-                        <input type="text" class="form-control name_field" id="naam">
-                    </div>
-                    <div class="field_wrapper">
-                        <label for="LEEFTIJD">CLUB</label>
-                        <select class="form-control" id="LEEFTIJD">
-                            <option> Feyenoord</option>
-                            <option> Feyenoord</option>
-                            <option> Feyenoord</option>
-                        </select>
-                    </div>
-                    <div class="field_wrapper">
-
-                        <label for="AGENDA">AGENDA</label>
-                        <select class="form-control" id="AGENDA">
-                            <option> January</option>
-                            <option> Ferbruary</option>
-                            <option> March</option>
-                            <option> April</option>
-                            <option> May</option>
-                            <option> June</option>
-                            <option> July</option>
-                            <option> August</option>
-                            <option> September</option>
-                            <option> October</option>
-                            <option> November</option>
-                            <option> December</option>
-                        </select>
-                    </div>
-                    <div class="field_wrapper">
-                        <label for="STERREN">STERREN</label>
-                        <select class="form-control sterren" id="STERREN">
-                            <option>5 Sterren</option>
-                            <option>5 Sterren</option>
-                            <option>5 Sterren</option>
-                        </select></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-xs-12">
-                    <div class="field_wrapper">
-                        <label for=" " style="visibility: hidden" class="hide_frm_small">NAAM</label>
-                        <input style="visibility: hidden" type="text" class="hide_frm_small form-control name_field"
-                               id=" ">
-                    </div>
-                    <div class="field_wrapper">
-                        <label for="LEEFTIJD">LEEFTIJD</label>
-                        <select class="form-control" id="LEEFTIJD">
-                            <option> 6-8 jaar</option>
-                            <option> 8-10 jaar</option>
-                            <option> 10-14 jaar</option>
-                        </select>
-                    </div>
-                    <div class="field_wrapper">
-                        <label for="POSITIE_VELD">POSITIE VELD</label>
-                        <select class="form-control" id="POSITIE_VELD">
-                            <option> keepper</option>
-                            <option> keepper</option>
-                            <option> keepper</option>
-                        </select>
-                    </div>
-                    <div class="field_wrapper">
-                        <label for="KWALIFICATIE">KWALIFICATIE</label>
-                        <select class="form-control kwalificatie" id="KWALIFICATIE">
-                            <option>F (6-8 jr.)</option>
-                            <option>F (6-8 jr.)</option>
-                            <option>F (6-8 jr.)</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-xs-12">
-                    <div class=" form-control btn btn-danger login_btn pull-right">INLOGGEN</div>
-                </div>
-            </div>
-        </div>
-
-
-    </form>
-
-</div>
-
-</div>
 <div class="logo_border">
     <div class="container">
         <div class="logo"><img src="<?php echo get_template_directory_uri(); ?>/images/feyenoord_logo.png"></div>

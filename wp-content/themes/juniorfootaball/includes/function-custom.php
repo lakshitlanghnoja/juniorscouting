@@ -54,6 +54,100 @@ else {
     
 }
 
+
+add_action('wp_ajax_nopriv_fetchweekdetails', 'fetchweekdetails');
+add_action('wp_ajax_fetchweekdetails', 'fetchweekdetails');
+
+function fetchweekdetails(){
+//echo '<pre>';print_r($_POST);
+$length = count($_POST['week']);
+//echo 'length'.$length;exit;
+$html = '<tr>
+<td>&nbsp;</td>
+<td><img src="'.get_template_directory_uri().'/images/club-1.png" /></td>
+<td><img src="'.get_template_directory_uri().'/images/laag-1.png" /></td>
+<td><img src="'.get_template_directory_uri().'/images/trainer-1.png" /></td>
+<td><img src="'.get_template_directory_uri().'/images/doelpunten-1.png" /></td>
+<td><img src="'.get_template_directory_uri().'/images/geel-1.png" /></td>
+<td><img src="'.get_template_directory_uri().'/images/rood-1.png" /></td>
+<td><div class=" form-control btn btn-danger meer_info_btn">MEER INFO</div></td>
+</tr>';
+$available = 0;
+$notavailable = 0;
+if(have_rows('weekly_details','user_'.$_POST['playerid'])){
+    while(have_rows('weekly_details','user_'.$_POST['playerid'])) : the_row();
+    
+    if($length == 1){
+        if((get_sub_field('week_name') == $_POST['week'][0]) && get_sub_field('year') == $_POST['year']){
+            $javascript = "javascript:moreinfo(".$_POST['playerid'].",'".get_sub_field('week_name')."',".get_sub_field('year').")";
+            $html .= '<tr>
+        <td><strong>'.get_sub_field("week_name").'</strong> </td>
+        <td>'.get_sub_field("football_group_name").'</td>
+                                    <td>'.get_sub_field("against_club_name").'</td>
+                                    <td>'.get_sub_field("coach_name").'</td>
+                                    <td>'.get_sub_field("result_of_the_game").'</td>
+                                    <td>'.get_sub_field("number_of_yellow_cards").'</td>
+                                    <td>'.get_sub_field("number_of_red_cards").'</td>
+                                    <td><button class=" form-control btn btn-danger meer_info_btn"  onclick="'.$javascript.'">MEER INFO</button></td></tr>';
+                                    $available = 1;
+    }else{
+        $notavailable = 1;
+    }
+    }else if($length == 2){
+        if((get_sub_field('week_name') == $_POST['week'][0] || get_sub_field('week_name') == $_POST['week'][1]) && get_sub_field('year') == $_POST['year']){
+            $javascript = "javascript:moreinfo(".$_POST['playerid'].",'".get_sub_field('week_name')."',".get_sub_field('year').")";
+            $html .= '<tr>
+        <td><strong>'.get_sub_field("week_name").'</strong> </td>
+        <td>'.get_sub_field("football_group_name").'</td>
+                                    <td>'.get_sub_field("against_club_name").'</td>
+                                    <td>'.get_sub_field("coach_name").'</td>
+                                    <td>'.get_sub_field("result_of_the_game").'</td>
+                                    <td>'.get_sub_field("number_of_yellow_cards").'</td>
+                                    <td>'.get_sub_field("number_of_red_cards").'</td>
+                                    <td><button class=" form-control btn btn-danger meer_info_btn"  onclick="'.$javascript.'">MEER INFO</button></td></tr>';
+                                    $available = 1;
+    }else{
+        $notavailable = 1;
+    }
+    }else if($length == 3){
+        if((get_sub_field('week_name') == $_POST['week'][0] || get_sub_field('week_name') == $_POST['week'][1] || get_sub_field('week_name') == $_POST['week'][2]) && get_sub_field('year') == $_POST['year']){
+            $javascript = "javascript:moreinfo(".$_POST['playerid'].",'".get_sub_field('week_name')."',".get_sub_field('year').")";
+            $html .= '<tr>
+        <td><strong>'.get_sub_field("week_name").'</strong> </td>
+        <td>'.get_sub_field("football_group_name").'</td>
+                                    <td>'.get_sub_field("against_club_name").'</td>
+                                    <td>'.get_sub_field("coach_name").'</td>
+                                    <td>'.get_sub_field("result_of_the_game").'</td>
+                                    <td>'.get_sub_field("number_of_yellow_cards").'</td>
+                                    <td>'.get_sub_field("number_of_red_cards").'</td>
+                                    <td><button class=" form-control btn btn-danger meer_info_btn"  onclick="'.$javascript.'">MEER INFO</button></td></tr>';
+                                    $available = 1;
+    }else{
+        $notavailable = 1;
+        
+    }
+    }
+    
+        //echo "in here if";    
+        
+endwhile;
+if($notavailable == 1 && $available == 0){
+$html .= '<tr>
+        <td colspan="8">No matching record found</td></tr>';
+    }
+echo json_encode(array('html'=>$html,'status' => 1));
+exit;
+}else{
+        $html .= '<tr><td colspan="8">Week details not available</td></tr>';
+
+    
+    echo json_encode(array('html'=>$html,'status' => 0));
+exit;
+}
+
+
+}
+
 add_action('wp_ajax_nopriv_clubregister', 'clubregister');
 add_action('wp_ajax_clubregister', 'clubregister');
 
@@ -359,6 +453,14 @@ function searchplayer(){
          'compare' => '=');
         
     }
+    if(isset($_POST['qualification']) && $_POST['qualification'] != ''){
+        
+        
+        $metaarrayqualification = array('key'=> 'qualification',
+        'value'   => $_POST['qualification'],
+         'compare' => '=');
+        
+    }
     $args['meta_query'] = array($metaarray);
     if(!empty($metaarray) && empty($metaarrayage))
         $args['meta_query'] = $metaarray;
@@ -370,6 +472,8 @@ function searchplayer(){
         $args['meta_query']= array('relation'=>'OR',$metaarray,$metaarraystar);
         if(!empty($metaarrayposition) && !empty($metaarrayposition))
         $args['meta_query']= array('relation'=>'OR',$metaarray,$metaarrayposition);
+        if(!empty($metaarrayqualification) && !empty($metaarrayqualification))
+        $args['meta_query']= array('relation'=>'OR',$metaarray,$metaarrayqualification);
     
     
 $user_query = new WP_User_Query( $args );

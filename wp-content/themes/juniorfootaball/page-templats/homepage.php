@@ -19,60 +19,17 @@
 get_header(); 
 $pageID = get_the_ID();
 ?>
-<div class="container-fluid">
-    <div class="row">
-        <!-- Carousel -->
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-            </ol>
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-                <?php if(have_rows('slider_details')){
-				while(have_rows('slider_details')):the_row();
-				$slidertext = get_sub_field('slider_text',$pageID);
-                $sliderimg = get_sub_field('slider_image',$pageID); 
-                ?>
-                <div class="item">
-                    <img src="<?php echo get_template_directory_uri(); ?>/images/banner.png" alt="First slide">
-                    <!-- Static Header -->
-                    <div class="header-text hidden-xs">
-                        <div class="col-md-12 text-center">
-                            <h2><strong>
-                               <?php echo $slidertext; ?></strong>
-                            </h2>
-
-                            <div class="">
-                                <a class="btn btn-theme btn-sm btn-min-block" href="#">VOOR SPELERS</a>
-                                <a class="btn btn-theme btn-sm btn-min-block" href="#">VOOR CLUBS</a>
-                            </div>
-                        </div>
-                    </div><!-- /header-text -->
-                </div>
-                
-                <?php endwhile;
-                } ?>
-            </div>
-            <!-- Controls -->
-            <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/slider_nav_left.png">
-            </a>
-            <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
-                <img src="<?php echo get_template_directory_uri(); ?>/images/slider_nav_right.png">
-            </a>
-        </div><!-- /carousel -->
-    </div>
-</div>
-
 <?php
-$search = realpath(__DIR__ . '/..').'\template-parts\search-widget.php';
+$search = realpath(__DIR__ . '/..').'\template-parts\serach-widget.php';
+$slider = realpath(__DIR__ . '/..').'\template-parts\common-slider.php';
 
 
-if (file_exists($search)) {
+if (file_exists($slider)) {
     // echo "in if";exit;
+    require( $slider );
+}
+if (file_exists($search)) {
+     //echo "in if";exit;
     require( $search );
 }
 ?>
@@ -146,11 +103,12 @@ $(".search-btn").click(function(){
     console.log(playername);
     // return false;
     var param = "?playername="+playername+"&age="+age+"&agenda="+agenda;
-    var url = "http://localhost/juniorfootball/search-result"+param;
+    var url = "<?php echo get_site_url();?>"+"/search-result"+param;
     // console.log(url);
     // return false;
     window.location.href=url;
     
 });
+
 </script>
 <?php get_footer();

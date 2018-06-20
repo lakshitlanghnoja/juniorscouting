@@ -21,6 +21,14 @@ $pageID = get_the_ID();
 ?>
 <?php
 $search = realpath(__DIR__ . '/..').'\template-parts\search-widget.php';
+$slider = realpath(__DIR__ . '/..').'\template-parts\common-slider.php';
+
+
+
+if (file_exists($slider)) {
+    // echo "in if";exit;
+    require( $slider );
+}
 
 
 if (file_exists($search)) {
@@ -56,7 +64,7 @@ if (file_exists($search)) {
                 <div class="col-md-4 col-sm-12 col-xs-12">
                 <div class="agenda_item_wrapper">
                     <div class="top_part">
-                        <h5><?php echo $post->post_tile;?></h5>
+                        <h5><a href="<?php echo get_permalink(get_the_ID()); ?>"><?php echo get_the_title();?></a></h5>
                         <h6><?php echo date('d M Y',strtotime($post->post_date)) ;?></h6>
                     </div>
                     <div class="bottom_part">
@@ -78,6 +86,14 @@ if (file_exists($search)) {
         </div>
     </div>
 </div>
+<?php
+$commonSponsor = realpath(__DIR__ . '/..').'/template-parts/common-sponsor.php';
+
+if (file_exists($commonSponsor)) {
+    // echo "in if";exit;
+    require( $commonSponsor );
+}
+?>
 
 
 <?php get_footer();

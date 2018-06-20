@@ -17,6 +17,18 @@
  */
 
 get_header(); 
+$search = realpath(__DIR__ . '/..').'\template-parts\serach-widget.php';
+$slider = realpath(__DIR__ . '/..').'\template-parts\common-slider.php';
+
+
+if (file_exists($slider)) {
+    // echo "in if";exit;
+    require( $slider );
+}
+if (file_exists($search)) {
+     //echo "in if";exit;
+    require( $search );
+}
 $current_user = '';
 if(is_user_logged_in()){
     $current_user = wp_get_current_user();
@@ -40,15 +52,7 @@ if(is_user_logged_in()){
 
     endwhile;
 ?>
-<?php
-$search = realpath(__DIR__ . '/..').'\template-parts\serach-widget.php';
 
-// echo $search;exit;
-if (file_exists($search)) {
-    // echo $search;exit;
-    require( $search );
-}
-?>
 <div class="gray_bar">
     <div class="container">
 
@@ -86,7 +90,7 @@ if (file_exists($search)) {
                         </li>
                         <li>
                             <div class="col-md-6 col-xs-6 title">Positie veld</div>
-                            <div class="col-md-6 col-xs-6 "><?php echo get_user_meta($user_id,'position')[0]; ?></div>
+                            <div class="col-md-6 col-xs-6 "><?php echo $position = get_user_meta($user_id,'position')[0]; ?></div>
                         </li>
                         <li>
                             <div class="col-md-6 col-xs-6 title">Club</div>
@@ -150,7 +154,7 @@ if (file_exists($search)) {
                 <div class="veld_wrapper">
                     <p class="section_title">POSITIE VELD</p>
                     <div class="section_content">
-                        <img src="<?php echo get_template_directory_uri(); ?>/images/veld_image.png" /  >
+                        <img src="<?php echo get_template_directory_uri(); ?>/images/<?php echo $position; ?>.png" /  >
                     </div>
                 </div>
 
@@ -160,21 +164,44 @@ if (file_exists($search)) {
                         <div class="table-responsive">
                             <div class="filter_wrapper">
                                 <div class="year">
-                                    <i class="fa fa-caret-left"></i>
-                                    <span>2017</span>
-                                    <i class="fa fa-caret-right"></i>
+                                    <select class="year" name="year">
+                                    <?php 
+                                    if(get_field('weekly_details','user_'.$user_id)){
+                                        while( has_sub_field('weekly_details','user_'.$user_id) ):
+                                            $select = get_sub_field_object('year');
+                                            foreach( $select['choices'] as $k => $v ){ 
+                                                ?>
+                                                <option value="<?php echo $v; ?>"><?php echo $k; ?></option>
+                                            <?php }
+                                        endwhile;
+                                    }
+                                    ?>
+                                    </select>
+                                    
 
                                 </div>
                                 <div class="week">
-                                    <i class="fa fa-caret-left"></i>
-                                    <span>Week 1-4</span>
-                                    <i class="fa fa-caret-right"></i>
+                                    <select class="weekname" name="weekname" multiple>
+                                    <?php 
+                                    if(get_field('weekly_details','user_'.$user_id)){
+                                        while( has_sub_field('weekly_details','user_'.$user_id) ):
+                                            $select = get_sub_field_object('week_name');
+                                            foreach( $select['choices'] as $k => $v ){ 
+                                                ?>
+                                                <option value="<?php echo $v; ?>"><?php echo $k; ?></option>
+                                            <?php }
+                                            break;
+                                        endwhile;
+                                    }
+                                    ?>
+                                    </select>
+                                    
 
                                 </div>
-                                <div class=" form-control btn btn-danger btn_WEERGEVEN">WEERGEVEN</div>
+                                <button class=" form-control btn btn-danger btn_WEERGEVEN weekdetails-btn">WEERGEVEN</button>
 
                             </div>
-                            <table width="100%" border="0">
+                            <table width="100%" border="0" class="weekdetails-table">
                                 <tbody>
                                 <tr>
                                     <td>&nbsp;</td>
@@ -196,7 +223,7 @@ if (file_exists($search)) {
                                     <td><?php echo get_sub_field('result_of_the_game'); ?></td>
                                     <td><?php echo get_sub_field('number_of_yellow_cards'); ?></td>
                                     <td><?php echo get_sub_field('number_of_red_cards'); ?></td>
-                                    <td><div class=" form-control btn btn-danger meer_info_btn">MEER INFO</div></td>
+                                    <td><button class=" form-control btn btn-danger meer_info_btn" onclick="javascript:moreinfo(<?php echo $user_id;?>,'<?php echo get_sub_field('week_name'); ?>','<?php echo get_sub_field('year'); ?>')">MEER INFO</></td>
                                 </tr>
 <?php endwhile; ?>                                
                                 
@@ -223,42 +250,7 @@ if (file_exists($search)) {
 
 <?php 
 }else{ ?>
-<div class="filter_wrapper inner_single">
-    <div class="container">
-        <h4>ZOEKEN</h4>
-        <form>
-            <div class="form-group form-inline">
-                <label for="naam">NAAM</label>
-                <input type="text" class="form-control name_field" id="naam">
-                <label for="LEEFTIJD">LEEFTIJD</label>
-                <select class="form-control" id="LEEFTIJD">
-                    <option> 6-8 jaar</option>
-                    <option> 8-10 jaar</option>
-                    <option> 10-14 jaar</option>
-                </select>
-                <label for="AGENDA">AGENDA</label>
-                <select class="form-control" id="AGENDA">
-                    <option> January</option>
-                    <option> Ferbruary</option>
-                    <option> March</option>
-                    <option> April</option>
-                    <option> May</option>
-                    <option> June</option>
-                    <option> July</option>
-                    <option> August</option>
-                    <option> September</option>
-                    <option> October</option>
-                    <option> November</option>
-                    <option> December</option>
-                </select>
-                <div class=" form-control btn btn-danger login_btn">ZOEKEN</div>
-            </div>
 
-
-        </form>
-
-    </div>
-</div>
 <div class="gray_bar">
     <div class="container">
 
@@ -436,5 +428,48 @@ if (file_exists($search)) {
 
     </div>
 
-<?php }
-get_footer();
+<?php } ?>
+<script>
+$(".weekdetails-btn").click(function(){
+    //console.log($('.year').find(":selected").text());
+    //return false;
+    $.ajax({
+                url: $('#ajax_url').val()+"?action=fetchweekdetails",
+                type: "POST",
+                data: {'year':$('.year').find(":selected").text(),"week":$(".weekname").val(),'playerid':<?php echo $user_id; ?>},
+                success: function (responseText) {
+                  var result = jQuery.parseJSON(responseText);
+                  console.log(result);
+                  if(result.status == 1){
+                    jQuery(".weekdetails-table tbody").html("");
+                      jQuery(".weekdetails-table tbody").html(result.html);
+                      //jQuery(".playermsg").css("color","green");
+                  }else{
+                    //jQuery(".playermsg").html(result.message);
+                    //jQuery(".playermsg").css("color","red");
+                  }  
+                }
+            });
+        
+        return false;
+});
+$(document).ready(function() {
+
+var last_valid_selection = null;
+
+$('.weekname').change(function(event) {
+
+  if ($(this).val().length > 3) {
+
+    $(this).val(last_valid_selection);
+  } else {
+    last_valid_selection = $(this).val();
+  }
+});
+});
+
+function moreinfo(playerid,weekname,year){
+window.location.href = '<?php echo get_site_url(); ?>'+'/moreinfo/?year='+year+'&playerid='+playerid+'&weekname='+weekname;
+}
+</script>
+<?php get_footer();
