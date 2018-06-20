@@ -30,7 +30,7 @@ foreach($users AS $user){
                 <div class="field_wrapper">
 
                     <label for="AGENDA">AGENDA</label>
-                    <select class="form-control" id="AGENDA">
+                    <select class="form-control agenda" id="AGENDA">
                     <?php $args = array(
                     'post_per_page'=>-1,
                     'post_type'=>'agendas',
@@ -164,6 +164,8 @@ if ( $the_query->have_posts() ) {
 <?php } ?>
 <script>
 $(".search-btn").click(function(){
+    console.log($(".agenda").val());
+    return false;
     var playername = '';
     var age = '';
     var agenda = '';

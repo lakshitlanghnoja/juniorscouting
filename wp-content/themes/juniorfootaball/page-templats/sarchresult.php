@@ -35,7 +35,7 @@ if (file_exists($slider)) {
 
 // echo $search;exit;
 if (file_exists($search)) {
-      echo "in if";exit;
+      //echo "in if";exit;
     require( $search );
 }
 
