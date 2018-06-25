@@ -17,13 +17,14 @@
  */
 
 get_header(); 
-error_reporting(0);
+
+error_reporting(E_ALL);
 $pageID = get_the_ID();
-// echo '<pre>';print_r($_REQUEST);exit;
+ 
 ?>
 <?php
-$search = realpath(__DIR__ . '/..').'\template-parts\serach-widget.php';
-$slider = realpath(__DIR__ . '/..').'\template-parts\common-slider.php';
+$search = realpath(__DIR__ . '/..').'/template-parts/serach-widget.php';
+$slider = realpath(__DIR__ . '/..').'/template-parts/common-slider.php';
 
 
 
@@ -114,8 +115,10 @@ if (file_exists($search)) {
         $i = 0;
         ?>
         <div class="row">
-        <?php 
-        if ( ! empty( $user_query->get_results() ) ) {
+          
+<?php 
+		//var_dump($user_query->get_results());exit;
+        if ( $user_query->get_results() != NULL ) {
             foreach ( $user_query->get_results() as $user ) {
                 // echo '<pre>';print_r($user);exit;
                 
@@ -148,7 +151,5 @@ if (file_exists($search)) {
         
         </div>
     </div>
-</div>
-
-
+</div>      
 <?php get_footer();

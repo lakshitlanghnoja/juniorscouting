@@ -187,7 +187,7 @@ $(".search-btn").click(function(){
     console.log(playername);
     // return false;
     var param = "?playername="+playername+"&age="+age+"&agenda="+agenda+"&star="+star+"&position="+position+"&qualification="+qualification;
-    var url = "http://localhost/juniorfootball/search-result"+param;
+    var url = "<?php echo get_site_url(); ?>/search-result"+param;
     // console.log(url);
     // return false;
     window.location.href=url;
