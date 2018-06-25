@@ -178,6 +178,8 @@ if ( !$user_id && email_exists($_POST['clubemail']) == false ) {
         update_user_meta($user_id,'name_filler_form',$_POST['name_filler']);
         update_user_meta($user_id,'how_did_you_find_us',$_POST['how_did_you_find_us']);
         // echo '<pre>';print_r($random_password);exit;
+        sendEmailByTemplate('info@juniorscouting.com',$user_email,'club_register',$maildata);
+        
 } else {
     $random_password = __('User already exists.  Password inherited.');
     echo json_encode(array("status" => 0,"message"=>"Please try again..."));
@@ -225,7 +227,7 @@ if ( !$user_id && email_exists($_POST['email']) == false ) {
         update_user_meta($user_id,'why_do_you_want_to_become_a_member',$_POST['why_member']);
         $maildata = array("username"=>$user_name,"pwd"=>$random_password);
         // echo '<pre>';print_r($maildata);exit;
-        // sendEmailByTemplate('info@juniorscouting.com',$user_email,'player_register',$maildata);
+        sendEmailByTemplate('info@juniorscouting.com',$user_email,'player_register',$maildata);
 } else {
     $random_password = __('User already exists.  Password inherited.');
     echo json_encode(array("status" => 0,"message"=>"Please try again..."));
@@ -239,9 +241,8 @@ exit;
 
 
 function sendEmailByTemplate($from, $to, $subject, $template = false, $data, $attachments = '') {
-    echo "here 1";exit;
+    
     if ($template) {
-        echo "in";
         $templateContent = file_get_contents(get_template_directory_uri() . '/email_templates/' . $template . '.html');
         foreach ($data as $key => $value) {
             $templateContent = str_replace("%$key%", $value, $templateContent);
@@ -252,7 +253,6 @@ function sendEmailByTemplate($from, $to, $subject, $template = false, $data, $at
         $headers1[] = 'Content-Type: text/html; charset=UTF-8';
         $headers1[] = 'From: Zara Tower <info@juniorscouting.com>';
         $headers1[] = "Return-Path: <info@juniorscouting.com>";
-        echo "in amil";exit;
         $headers = implode("\r\n", $headers1) . "," . "-f" . strip_tags($from);
         if (false == wp_mail($to, strip_tags($subject), $templateContent, $headers, $attachments)) {
             return false;

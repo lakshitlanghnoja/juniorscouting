@@ -19,7 +19,7 @@
 get_header(); 
 $pageID = get_the_ID();
 //echo '<pre>';print_r(stripslashes($_REQUEST['year']));exit;
-$year = stripslashes($_REQUEST['year']);
+$year = stripslashes($_REQUEST['yearval']);
 ?>
 
 <div class="inner_wrapper">

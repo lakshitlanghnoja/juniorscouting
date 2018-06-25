@@ -165,6 +165,7 @@ if(is_user_logged_in()){
                             <div class="filter_wrapper">
                                 <div class="year">
                                     <select class="year" name="year">
+                                    <option value="">Select Year</option>
                                     <?php 
                                     if(get_field('weekly_details','user_'.$user_id)){
                                         while( has_sub_field('weekly_details','user_'.$user_id) ):
@@ -469,7 +470,7 @@ $('.weekname').change(function(event) {
 });
 
 function moreinfo(playerid,weekname,year){
-window.location.href = '<?php echo get_site_url(); ?>'+'/moreinfo/?year='+year+'&playerid='+playerid+'&weekname='+weekname;
+window.location.href = '<?php echo get_site_url(); ?>'+'/moreinfo/?yearval='+year+'&playerid='+playerid+'&weekname='+weekname;
 }
 </script>
 <?php get_footer();
