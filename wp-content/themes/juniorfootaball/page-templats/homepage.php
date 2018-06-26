@@ -41,38 +41,37 @@ if (file_exists($search)) {
             </div>
 
             <div class="col-md-6 leftpart">
-                <img class="icon_image" src="<?php echo get_template_directory_uri(); ?>/images/jr_spelers_icon.png"/>
-                <h5 class="header">Voor junior spelers</h5>
-                <h6>€ 50 / jaar </h6>
+            <?php $imgArray = get_field('player_member_image',$pageID); ?>
+                <img class="icon_image" src="<?php echo $imgArray['url']; ?>"/>
+                <h5 class="header"><?php echo get_field('player_member_title',$pageID); ?></h5>
+                <h6>€ <?php echo get_field('player_membership_price',$pageID); ?> / jaar </h6>
                 <a class="btn btn-theme btn-sm btn-min-block" href="<?php echo esc_url(get_permalink(get_page_by_path('Player Register Page'))); ?>">Lid worden als speler</a>
-                <p class="bodytxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget congue sapien.
-                    Nunc maximus laoreet quam, in sollicitudin diam dignissim ornare. Integer venenatis arcu venenatis
-                    neque rutrum, vel vehicula neque bibendum. Orci varius natoque penatibus et magnis dis parturient
-                    montes, nascetur ridiculus mus. Maecenas ligula dolor, sagittis ut mauris sit amet, maximus
-                    scelerisque tellus. Praesent et fringilla augue, quis tincidunt est. Ut sed dolor at justo consequat
-                    elementum. </p>
+                <p class="bodytxt"><?php echo get_field('player_membership_details',$pageID); ?> </p>
                 <ul>
-                    <li>uitgebreide profielpagina</li>
-                    <li>wordt opgemerkt door clubs</li>
-                    <li>korting in de webshop</li>
+                <?php 
+                if(have_rows('player_membership_benifits',$pageID)){
+                    while(have_rows('player_membership_benifits',$pageID)) : the_row(); ?>
+                    <li><?php echo get_sub_field('benifits',$pageID);?></li>
+                <?php endwhile;
+                }
+                ?>
                 </ul>
             </div>
             <div class="col-md-6 rightpart">
-                <img class="icon_image" src="<?php echo get_template_directory_uri(); ?>/images/voor_clubs_icon.png"/>
-                <h5 class="header">Voor clubs</h5>
-                <h6>€ 350 / jaar </h6>
-                <a class="btn btn-theme btn-sm btn-min-block" href="<?php echo esc_url(get_permalink(get_page_by_path('Club Register Page'))); ?>">Lid worden als club</a>
-                <p class="bodytxt">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget congue sapien.
-                    Nunc maximus laoreet quam, in sollicitudin diam dignissim ornare. Integer venenatis arcu venenatis
-                    neque rutrum, vel vehicula neque bibendum. Orci varius natoque penatibus et magnis dis parturient
-                    montes, nascetur ridiculus mus. Maecenas ligula dolor, sagittis ut mauris sit amet, maximus
-                    scelerisque tellus. Praesent et fringilla augue, quis tincidunt est. Ut sed dolor at justo consequat
-                    elementum. </p>
+            <?php $imgArray = get_field('club_member_image',$pageID); ?>
+                <img class="icon_image" src="<?php echo $imgArray['url']; ?>"/>
+                <h5 class="header"><?php echo get_field('club_member_title',$pageID); ?></h5>
+                <h6>€ <?php echo get_field('club_membership_price',$pageID); ?> / jaar </h6>
+                <a class="btn btn-theme btn-sm btn-min-block" href="<?php echo esc_url(get_permalink(get_page_by_path('Club Register Page'))); ?>">Lid worden als speler</a>
+                <p class="bodytxt"><?php echo get_field('club_membership_details',$pageID); ?> </p>
                 <ul>
-                    <li>uitgebreide zoekmogelijkheden</li>
-                    <li>contacteren van spelers</li>
-                    <li>uitgebreide profielpagina</li>
-                    <li>korting in de webshop</li>
+                <?php 
+                if(have_rows('club_membership_benifits',$pageID)){
+                    while(have_rows('club_membership_benifits',$pageID)) : the_row(); ?>
+                    <li><?php echo get_sub_field('benifits',$pageID);?></li>
+                <?php endwhile;
+                }
+                ?>
                 </ul>
             </div>
         </div>
